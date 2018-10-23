@@ -20,6 +20,7 @@
 		"chai-http": "^4.0.0",
 		"cross-env": "^5.1.6",
 		"mocha": "^5.2.0",
-		"mongoose": "^5.3.6"
+		"mongoose": "^5.3.6",
+		"nodemon": "^1.18.4"
 	}
 }
