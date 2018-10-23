@@ -18,14 +18,14 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
     return Note.find(filter).sort({ updatedAt: 'desc' });
   })
   .then(results => {
-    console.log('what\'s up yo');
+    // eslint-disable-next-line no-console
     console.log(results);
   })
   .then(() => {
     return mongoose.disconnect(); 
   })
   .catch(err => {
-    console.error(`ERROR: ${err.message}`);
+    // eslint-disable-next-line no-console
     console.error(err);
   });
 

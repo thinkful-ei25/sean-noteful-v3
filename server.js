@@ -36,11 +36,12 @@ app.use((req, res, next) => {
 });
 
 // Custom Error Handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   if (err.status) {
     const errBody = Object.assign({}, err, { message: err.message });
     res.status(err.status).json(errBody);
   } else {
+    // eslint-disable-next-line no-console
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -52,17 +53,22 @@ mongoose
     { useNewUrlParser: true }
   )
   .catch(err => {
+    // eslint-disable-next-line no-console
     console.error(`ERROR: ${err.message}`);
+    // eslint-disable-next-line no-console
     console.error('\n === Did you remember to start `mongod`? === \n');
+    // eslint-disable-next-line no-console
     console.error(err);
   });
 // Listen for incoming connections
 if (process.env.NODE_ENV !== 'test') {
   app
     .listen(PORT, function() {
+      // eslint-disable-next-line no-console
       console.info(`Server listening on ${this.address().port}`);
     })
     .on('error', err => {
+      // eslint-disable-next-line no-console
       console.error(err);
     });
 }

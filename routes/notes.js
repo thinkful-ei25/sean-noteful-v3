@@ -3,7 +3,6 @@
 const express = require('express');
 
 const router = express.Router();
-const mongoose = require('mongoose');
 const Note = require('../models/note');
 
 /* ========== GET/READ ALL ITEMS ========== */
@@ -19,8 +18,6 @@ router.get('/', (req, res, next) => {
   Note.find(filter)
     .sort({ updatedAt: 'desc' })
     .then(results => {
-      console.log('what\'s up yo');
-      console.log(results);
       res.json({ results });
     })
     .catch(err => {
@@ -72,8 +69,7 @@ router.put('/:id', (req, res, next) => {
       res.status(204).end(); 
     })
     .catch(err => { 
-      next(err); 
-      console.error(`ERROR RUN!!! ${err}`);
+      return next(err); 
     }); 
 });
 
