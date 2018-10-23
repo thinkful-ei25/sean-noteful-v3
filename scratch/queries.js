@@ -28,10 +28,29 @@ const Note = require('../models/note');
 //     console.error(err);
 //   });
 
+// mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
+//   .then(() => { 
+//     const id = '000000000000000000000002'; 
+//     return Note.findById(id); 
+//   })
+//   .then(results => { 
+//     console.log('Results: ' + results);
+//   })
+//   .then(() => { 
+//     return mongoose.disconnect(); 
+//   })
+//   .catch(err => { 
+//     console.error(`ERROR RUN!!! ${err}`);
+//   }); 
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .then(() => { 
-    const id = '000000000000000000000002'; 
-    return Note.findById(id); 
+    //const id = '000000000000000000000002'; 
+    const newNote = { 
+      title : 'lupin is my dog', 
+      content : 'we go on long relaxing walks together'
+    }; 
+    return Note.create(newNote); 
   })
   .then(results => { 
     console.log('Results: ' + results);
