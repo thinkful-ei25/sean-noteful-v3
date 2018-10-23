@@ -46,7 +46,6 @@ app.use((err, req, res, next) => {
   }
 });
 
-
 mongoose
   .connect(
     MONGODB_URI,
