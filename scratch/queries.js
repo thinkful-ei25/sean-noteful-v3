@@ -43,14 +43,50 @@ const Note = require('../models/note');
 //     console.error(`ERROR RUN!!! ${err}`);
 //   }); 
 
+// mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
+//   .then(() => { 
+//     const newNote = { 
+//       title : 'lupin is my dog', 
+//       content : 'we go on long relaxing walks together'
+//     }; 
+//     return Note.create(newNote); 
+//   })
+//   .then(results => { 
+//     console.log('Results: ' + results);
+//   })
+//   .then(() => { 
+//     return mongoose.disconnect(); 
+//   })
+//   .catch(err => { 
+//     console.error(`ERROR RUN!!! ${err}`);
+//   }); 
+
+// mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
+//   .then(() => { 
+//     const id = '000000000000000000000007'; 
+
+//     const newNote = { 
+//       title: 'lupi', 
+//       content : 'he hurt is paw today :('
+//     }; 
+//     return Note.findOneAndUpdate({_id : id}, {$set : newNote}); 
+//   })
+//   .then(results => { 
+//     console.log('Results: ' + results);
+//   })
+//   .then(() => { 
+//     return mongoose.disconnect(); 
+//   })
+//   .catch(err => { 
+//     console.error(`ERROR RUN!!! ${err}`);
+//   }); 
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .then(() => { 
-    //const id = '000000000000000000000002'; 
-    const newNote = { 
-      title : 'lupin is my dog', 
-      content : 'we go on long relaxing walks together'
-    }; 
-    return Note.create(newNote); 
+    const id = '000000000000000000000007'; 
+
+
+    return Note.findByIdAndRemove(id); 
   })
   .then(results => { 
     console.log('Results: ' + results);
@@ -61,3 +97,4 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .catch(err => { 
     console.error(`ERROR RUN!!! ${err}`);
   }); 
+
