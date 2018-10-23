@@ -7,14 +7,16 @@ const Note = require('../models/note');
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
-  const searchTerm = 'cats';
+  const searchTerm = req.query.searchTerm;  
   let filter = {};
 
   if (searchTerm) {
-    filter.title = { $regex: searchTerm };
+    filter  = { $or : [ 
+      {title: {$regex: searchTerm} }, 
+      {content: {$regex: searchTerm}}
+    ]}; 
   }
-  //filter = {$or([{ title: searchTerm }, { content: searchTerm }]);
-
+  
   Note.find(filter)
     .sort({ updatedAt: 'desc' })
     .then(results => {

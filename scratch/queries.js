@@ -11,8 +11,12 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
     let filter = {};
 
     if (searchTerm) {
-      filter.title = { $regex: searchTerm };
+      //filter.title = { $regex: searchTerm };
     }
+    filter  = { $or : [ 
+      {title: {$regex: searchTerm} }, 
+      {content: {$regex: searchTerm}}
+    ]}; 
     //filter = {$or([{ title: searchTerm }, { content: searchTerm }]); 
 
     return Note.find(filter).sort({ updatedAt: 'desc' });
