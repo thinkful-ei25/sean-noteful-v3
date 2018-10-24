@@ -107,6 +107,23 @@ describe('Notes RESTful API', function() {
     });
   });
 
+  describe('GET /api/notes/', function(){ 
+    it('should return all notes', function(){ 
+      return Promise.all([
+        Note.find(),
+        chai.request(app).get('/api/notes')
+      ])
+      // 3) then compare database results to API response
+        .then(([data, res]) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          //console.log('It\'s the body: ' + res.body.results);
+          expect(res.body.results).to.be.a('array');
+          expect(res.body.results).to.have.length(data.length);
+        });
+    }); 
+  }); 
+  
   describe('GET /api/notes/:id', function() {
     it('should return correct note', function() {
       let data;
