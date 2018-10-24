@@ -11,10 +11,8 @@ router.get('/', (req, res, next) => {
   let filter = {};
 
   if (searchTerm) {
-    filter  = { $or : [ 
-      {title: {$regex: searchTerm} }, 
-      {content: {$regex: searchTerm}}
-    ]}; 
+    const re = new RegExp(searchTerm, 'i');
+    filter.$or = [{ 'title': re }, { 'content': re }];
   }
   
   Note.find(filter)

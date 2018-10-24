@@ -7,9 +7,10 @@ const noteSchema = new mongoose.Schema({
   content: String
 });
 
-noteSchema.set('toObject', {
+noteSchema.set('toJSON', {
   virtuals: true,     // include built-in virtual `id`
   transform: (doc, ret) => {
+    ret.id = ret._id; 
     delete ret._id; // delete `_id`
     delete ret.__v;
   }
