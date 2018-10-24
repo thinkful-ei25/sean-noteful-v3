@@ -47,30 +47,22 @@ app.use((err, req, res) => {
   }
 });
 
-mongoose
-  .connect(
-    MONGODB_URI,
-    { useNewUrlParser: true }
-  )
-  .catch(err => {
-    // eslint-disable-next-line no-console
-    console.error(`ERROR: ${err.message}`);
-    // eslint-disable-next-line no-console
-    console.error('\n === Did you remember to start `mongod`? === \n');
-    // eslint-disable-next-line no-console
-    console.error(err);
-  });
 // Listen for incoming connections
-if (process.env.NODE_ENV !== 'test') {
-  app
-    .listen(PORT, function() {
-      // eslint-disable-next-line no-console
-      console.info(`Server listening on ${this.address().port}`);
-    })
-    .on('error', err => {
+if (require.main === module) {
+  // Connect to DB and Listen for incoming connections
+  mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
+    .catch(err => {
       // eslint-disable-next-line no-console
       console.error(err);
     });
+
+  app.listen(PORT, function () {
+    // eslint-disable-next-line no-console
+    console.info(`Server listening on ${this.address().port}`);
+  }).on('error', err => {
+    // eslint-disable-next-line no-console
+    console.error(err);
+  });
 }
 
 module.exports = app; // Export for testing
