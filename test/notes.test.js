@@ -38,6 +38,7 @@ describe('Notes RESTful API', function() {
 
   describe('PUT /api/notes/:id', function() { 
     let data; 
+    const newItem = { name : 'cheese', content : 'cheese'}; 
     it('should update and return a new item', function() { 
       return Note.findOne()
         .then(_data => { 
@@ -46,6 +47,7 @@ describe('Notes RESTful API', function() {
         })
         .then((res) => { 
           expect(res).to.have.status(204); 
+          expect(res.body.title).to.eql(newItem.title); 
         });
     });  
   }); 
@@ -84,7 +86,6 @@ describe('Notes RESTful API', function() {
             expect(res).to.have.status(201);
             expect(res).to.have.header('location');
             expect(res).to.be.json;
-            expect(res.body).to.be.a('object');
             expect(res.body).to.have.keys(
               'id',
               'title',
@@ -92,6 +93,7 @@ describe('Notes RESTful API', function() {
               'createdAt',
               'updatedAt'
             );
+            // 2) t
             // 2) then call the database
             return Note.findById(res.body.id);
           })
