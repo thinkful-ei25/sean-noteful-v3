@@ -2,3 +2,11 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: PxJ2NDilvBV0N6vkRgfTqLMgh5n422UoKzIyNtTjIDrL2HWzu9wxpoFOYXw8Z5C5L84UkEss1TSJmeMaU5x+IYQ4sQqcZ/AiLqPdgZrvt/TFcL37JZjnTiR44zFcNHKAgwDHHGoudPwqftJuqHJMR99mI/FU+wwDp7Rh1URdoltJJcwILpkNkanmMGDeqmZpy2s3kBLAW0DRCJxMnwpUwLJeR1RPIFZRCT0mQFm7Hy63SRc4hhAVEaQUiDbPppwlFeOGatdjH07diLqk4LKDQpvaZhlXHnWDxagGmFQ5qdnJGHURHuo7m8GttuhcpARoOhECtYgKf7w7+VIbeJmuNoWhajzyDiqvTeht2IB2qiUGYYk2DQ0yWUddN1t9S3hfAUArtZMXXWiDeHr0KxsBSkqXnxh7Sw/11RhdtE6bVvbyxoiGyl0W+6vQtoUVMKokdcBSedJiALWLPmgtELpkHqit/JZrEtlq10JomgOXYKGbQTZJqA1v0bXrminI88kg9sAHN0MSy+inqcrN4YO8Lmb4B2wbF7SN12Pm+WaVT5XPqfrD6apMOegPAtsLKIIOjt5Krd5uMPmpCNFK0LshITS7UiLDdKpridv3AtV421+9/YGCIjmrI1WDC7S0aklTbbopNE4TadA5VjfBqbEmo4qGIbiMwIV4tmsizSt6x58=
+  app: noteful-app-1
+  on:
+    repo: thinkful-ei25/sean-noteful-v3
+    branch: feature/mongoTesting
