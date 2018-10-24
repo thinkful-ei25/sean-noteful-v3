@@ -42,12 +42,26 @@ describe('Notes RESTful API', function() {
       return Note.findOne()
         .then(_data => { 
           data = _data; 
-          return chai.request(app).put(`/api/notes/${data.id}`)
+          return chai.request(app).put(`/api/notes/${data.id}`); 
         })
         .then((res) => { 
           expect(res).to.have.status(204); 
         });
     });  
+  }); 
+
+  describe('DELETE /api/notes', function(){ 
+    let data; 
+    it('should find a note and delte it', function() { 
+      return Note.findOne()
+        .then(_data => { 
+          data =_data; 
+          return chai.request(app).del(`/api/notes/${data.id}`); 
+        })
+        .then((res) => { 
+          expect(res).to.have.status(204); 
+        }); 
+    }); 
   }); 
 
   describe('POST /api/notes', function() {
@@ -125,4 +139,4 @@ describe('Notes RESTful API', function() {
         });
     });
   });
-})
+}); 
