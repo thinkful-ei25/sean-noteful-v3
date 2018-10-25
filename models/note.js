@@ -15,8 +15,8 @@ noteSchema.set('toJSON', {
     delete ret.__v;
   }
 });
-
+('Note', noteSchema);
 // Add `createdAt` and `updatedAt` fields
 noteSchema.set('timestamps', true);
 
-module.exports = mongoose.model('Note', noteSchema);
+module.exports = mongoose.model; 
