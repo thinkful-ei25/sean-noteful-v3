@@ -125,5 +125,19 @@ describe('Notes RESTful API', function() {
     });
   });
 
+  describe('DELETE /api/folders', function(){ 
+    let data; 
+    it('should find a note and delte it', function() { 
+      return Folder.findOne()
+        .then(_data => { 
+          data =_data; 
+          return chai.request(app).del(`/api/folders/${data.id}`); 
+        })
+        .then((res) => { 
+          expect(res).to.have.status(204); 
+        }); 
+    }); 
+  }); 
+
 }); 
 
