@@ -75,7 +75,6 @@ describe('Notes RESTful API', function() {
             'updatedAt'
           ); 
       
-
           // 3) then compare database results to API response
           expect(res.body.id).to.equal(data.id);
           expect(res.body.title).to.equal(data.title);
@@ -85,21 +84,46 @@ describe('Notes RESTful API', function() {
         });
     }); 
   }); 
-  // describe('PUT /api/folders/:id', function() { 
-  //   let data; 
-  //   const newItem = { name : 'cheese', content : 'cheese'}; 
-  //   it('should update and return a new item', function() { 
-  //     return Note.findOne()
-  //       .then(_data => { 
-  //         data = _data; 
-  //         return chai.request(app).put(`/api/notes/${data.id}`); 
-  //       })
-  //       .then((res) => { 
-  //         expect(res).to.have.status(204); 
-  //         expect(res.body.title).to.eql(newItem.title); 
-  //       });
-  //   });  
-  // }); 
+
+  describe('POST /api/folders', function() {
+    it('should create and return a new item when provided valid data', function() {
+      const newItem = {
+        name: 'Death Metal Blog Posts'
+      };
+
+      let res;
+      // 1) First, call the API
+      return (
+        chai
+          .request(app)
+          .post('/api/folders')
+          .send(newItem)
+          .then(function(_res) {
+            res = _res;
+            expect(res).to.have.status(201);
+            expect(res).to.have.header('location');
+            expect(res).to.be.json;
+            expect(res.body).to.have.keys(
+              'id',
+              'name',
+              'createdAt',
+              'updatedAt'
+            );
+            // 2) t
+            // 2) then call the database
+            return Folder.findById(res.body.id);
+          })
+          // 3) then compare the API response to the database results
+          .then(data => {
+            expect(res.body.id).to.equal(data.id);
+            expect(res.body.title).to.equal(data.title);
+            expect(res.body.content).to.equal(data.content);
+            expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
+            expect(new Date(res.body.updatedAt)).to.eql(data.updatedAt);
+          })
+      );
+    });
+  });
 
 }); 
 
