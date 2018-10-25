@@ -13,13 +13,13 @@
 	},
 	"dependencies": {
 		"express": "^4.16.3",
-		"morgan": "^1.9.0"
+		"morgan": "^1.9.0",
+		"mongoose": "^5.3.6"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",
 		"chai-http": "^4.0.0",
 		"cross-env": "^5.1.6",
-		"mocha": "^5.2.0",
-		"mongoose": "^5.3.6"
+		"mocha": "^5.2.0"
 	}
 }
