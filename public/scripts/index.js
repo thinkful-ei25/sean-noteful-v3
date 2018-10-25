@@ -10,13 +10,13 @@ $(document).ready(function () {
     // api.search('/api/tags')
   ])
     .then(([
-      notes,
-      folders,
-      tags
+      notes
+      //folders,
+      //tags
     ]) => {
       store.notes = notes;
-      store.folders = folders;
-      store.tags = tags;
+      //store.folders = folders;
+      //store.tags = tags;
       noteful.render();
     });
 
