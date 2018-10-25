@@ -16,4 +16,16 @@ router.get('/', (req, res, next) => {
     }); 
 }); 
 
+router.get('/:id', (req, res, next) => { 
+  const {id} = req.params; 
+  Folder.findById(id)
+    .then(result => { 
+      res.json(result); 
+    })
+    .catch(err => { 
+      return next(err); 
+    }); 
+}); 
+
+
 module.exports = router;
