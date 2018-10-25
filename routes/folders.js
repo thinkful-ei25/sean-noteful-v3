@@ -37,7 +37,7 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => { 
   const {id} = req.params; 
-  const { name } = req.body; 
+  const {name} = req.body; 
 
   if (!name) {
     const err = new Error('Missing `title` in request body');
@@ -57,6 +57,38 @@ router.post('/', (req, res, next) => {
     .catch(err => { 
       return next(err); 
     }); 
+}); 
+
+router.put('/:id', (req, res, next) => { 
+  const {id} = req.params; 
+  const {name} = req.body; 
+
+  if (!name) {
+    const err = new Error('Missing `title` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  const updateFolder = { name}; 
+
+  Folder
+    .findOneAndUpdate({_id : id}, {$set : updateFolder})
+    .then(() => { 
+      res.status(204).end(); 
+    }) 
+    .catch(err => {
+      if (err.code === 11000) {
+        err = new Error('The folder name already exists');
+        err.status = 400;
+      }
+      next(err);
+    });
 }); 
 
 
