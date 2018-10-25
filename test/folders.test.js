@@ -53,6 +53,38 @@ describe('Notes RESTful API', function() {
     }); 
   }); 
 
+  describe('GET /api/folders/:id', function(){ 
+    it('should return a file', function(){ 
+      let data;
+      // 1) First, call the database
+      return Folder.findOne()
+        .then(_data => {
+          data = _data;
+          // 2) then call the API with the ID
+          return chai.request(app).get(`/api/folders/${data.id}`);
+        })
+        .then(res => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.keys(
+            'name',
+            'id', 
+            'createdAt', 
+            'updatedAt'
+          ); 
+      
+
+          // 3) then compare database results to API response
+          expect(res.body.id).to.equal(data.id);
+          expect(res.body.title).to.equal(data.title);
+          expect(res.body.content).to.equal(data.content);
+          expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
+          expect(new Date(res.body.updatedAt)).to.eql(data.updatedAt);
+        });
+    }); 
+  }); 
   // describe('PUT /api/folders/:id', function() { 
   //   let data; 
   //   const newItem = { name : 'cheese', content : 'cheese'}; 
