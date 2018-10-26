@@ -76,25 +76,50 @@ router.post('/', (req, res, next) => {
 
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
 router.put('/:id', (req, res, next) => {
-
-  const id = req.params.id; 
-    
-  const newNote = { 
-    title: req.body.title, 
-    content : req.body.content, 
-    folderId : req.body.folderId
-  }; 
-
-  // if (!mongoose.Types.ObjectId.isValid(newNote.folderId)) {
-  //   const err = new Error('The `id` is not valid');
-  //   err.status = 400;
-  //   return next(err);
-  // }
+  const {id} = req.params; 
 
   const newArg = {new :true}; 
-  Note.findByIdAndUpdate(id, newNote, newArg) 
-    .then(() => { 
-      res.status(204).end(); 
+  
+  const update = {}; 
+  const updateableField = ['title', 'content', 'folderId', 'tags']; 
+
+  updateableField.forEach(field => { 
+    if (req.body[field]){ 
+      update[field] = req.body[field]; 
+    }
+  }); 
+
+  console.log(update);
+
+  if (!update.title) {
+    const err = new Error('Missing `title` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  if (update.folderId && !mongoose.Types.ObjectId.isValid(update.folderId)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  if(update.folderId === '') { 
+    delete update.folderId; 
+    update.$unset = {folderId : 1}; 
+  }
+
+  Note.findByIdAndUpdate(id, update, newArg) 
+    .then((result) => { 
+      if (result)
+        res.status(204).json(result); 
+      else 
+        return next(); 
     })
     .catch(err => { 
       return next(err); 
