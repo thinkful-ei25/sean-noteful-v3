@@ -79,8 +79,8 @@ router.put('/:id', (req, res, next) => {
   //   err.status = 400;
   //   return next(err);
   // }
-
-  Note.findByIdAndUpdate(id, newNote, {new :true}) 
+  const newArg = {new :true}; 
+  Note.findByIdAndUpdate(id, newNote, newArg) 
     .then(() => { 
       res.status(204).end(); 
     })
