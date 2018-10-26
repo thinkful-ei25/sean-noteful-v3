@@ -37,6 +37,10 @@ describe('Notes RESTful API', function() {
     return mongoose.connection.db.dropDatabase();
   });
 
+  afterEach(function() { 
+    return mongoose.connection.db.dropDatabase(); 
+  }); 
+
   after(function() {
     return mongoose.disconnect();
   });
@@ -76,7 +80,8 @@ describe('Notes RESTful API', function() {
       const newItem = {
         title: 'The best article about cats ever!',
         content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...'
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...', 
+        folderId : '111111111111111111111101'
       };
 
       let res;
@@ -96,7 +101,8 @@ describe('Notes RESTful API', function() {
               'title',
               'content',
               'createdAt',
-              'updatedAt'
+              'updatedAt', 
+              'folderId'
      
             );
             // 2) t
@@ -125,9 +131,8 @@ describe('Notes RESTful API', function() {
         .then(([data, res]) => {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
-          //console.log('It\'s the body: ' + res.body.results);
-          expect(res.body.results).to.be.a('array');
-          expect(res.body.results).to.have.length(data.length);
+          expect(res.body).to.be.a('array');
+          expect(res.body).to.have.length(data.length);
         });
     }); 
   }); 

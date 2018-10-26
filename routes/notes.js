@@ -40,13 +40,13 @@ router.get('/:id', (req, res, next) => {
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/', (req, res, next) => {
-  const {id} = req.params;  
   const newNote = {
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content, 
+    folderId: req.body.folderId
   };
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(newNote.folderId)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
     return next(err);
