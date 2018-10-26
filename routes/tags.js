@@ -3,13 +3,11 @@
 const express = require('express'); 
 const router = express.Router(); 
 
-const Folder = require('../models/folder'); 
+const Tag = require('../models/tag'); 
 const mongoose = require('mongoose'); 
 
-
-
 router.get('/', (req, res, next) => { 
-  Folder.find()
+  Tag.find()
     .then(result => { 
       res.json(result); 
     })
@@ -21,7 +19,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => { 
   const {id} = req.params; 
 
-  Folder.findById(id)
+  Tag.findById(id)
     .then(result => { 
       res.json(result); 
     })
