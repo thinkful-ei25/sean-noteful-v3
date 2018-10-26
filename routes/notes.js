@@ -4,6 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 const Note = require('../models/note');
+const mongoose = require('mongoose'); 
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
@@ -12,7 +13,7 @@ router.get('/', (req, res, next) => {
 
   if (searchTerm) {
     const re = new RegExp(searchTerm, 'i');
-    filter.$or = [{ 'title': re }, { 'content': re }];
+    filter.$or = [{ 'title': re }, { 'content': re }, { 'folderId' : re}];
   }
   
   Note.find(filter)
@@ -39,10 +40,17 @@ router.get('/:id', (req, res, next) => {
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/', (req, res, next) => {
+  const {id} = req.params;  
   const newNote = {
     title: req.body.title,
     content: req.body.content
   };
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
   Note.create(newNote)
     .then(result => {
       res
@@ -64,6 +72,13 @@ router.put('/:id', (req, res, next) => {
     title: req.body.title, 
     content : req.body.content
   }; 
+
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
   Note.findOneAndUpdate({_id : id}, {$set : newNote}) 
     .then(() => { 
       res.status(204).end(); 

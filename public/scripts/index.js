@@ -5,18 +5,19 @@ $(document).ready(function () {
   noteful.bindEventListeners();
 
   Promise.all([
-    api.search('/api/notes')
-    // api.search('/api/folders'),
+    api.search('/api/notes'),
+    api.search('/api/folders')
     // api.search('/api/tags')
   ])
     .then(([
       notes,
-      folders,
-      tags
+      folders
+      //tags
     ]) => {
-      store.notes = notes;
+      store.notes.results = notes;
       store.folders = folders;
-      store.tags = tags;
+      console.log(JSON.stringify(store.notes.results.results));
+      //store.tags = tags;
       noteful.render();
     });
 
