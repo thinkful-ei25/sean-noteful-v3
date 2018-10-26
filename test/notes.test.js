@@ -33,10 +33,6 @@ describe('Notes RESTful API', function() {
     return Folder.insertMany(folders); 
   });   
 
-  afterEach(function() {
-    return mongoose.connection.db.dropDatabase();
-  });
-
   afterEach(function() { 
     return mongoose.connection.db.dropDatabase(); 
   }); 

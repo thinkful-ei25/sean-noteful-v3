@@ -15,14 +15,11 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .then(() => {
     return Promise.all([
       Note.insertMany(notes),
+      Tag.insertMany(tags),
       Folder.insertMany(folders),
-      Folder.createIndexes(), 
-      Tag.insertMany(tags)
+      Folder.createIndexes()
+ 
     ]);
-  })
-  .then(results => {
-    // eslint-disable-next-line no-console
-    console.info(`Inserted ${results.length} Notes`);
   })
   .then(() => mongoose.disconnect())
   .catch(err => {
