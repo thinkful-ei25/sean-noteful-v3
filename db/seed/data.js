@@ -69,4 +69,23 @@ const folders = [
   }
 ];
 
-module.exports = { notes, folders };
+const tags = [ 
+  {
+    '_id': '111111111111111111111100',
+    'name': 'Weird'
+  },
+  {
+    '_id': '111111111111111111111101',
+    'name': 'Wild'
+  },
+  {
+    '_id': '111111111111111111111102',
+    'name': 'Wicked'
+  },
+  {
+    '_id': '111111111111111111111103',
+    'name': 'Wired'
+  }
+]; 
+
+module.exports = { notes, folders, tags };
