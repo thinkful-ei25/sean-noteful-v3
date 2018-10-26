@@ -8,8 +8,9 @@ const app = require('../server');
 const { TEST_MONGODB_URI } = require('../config');
 
 const Note = require('../models/note');
+const Folder = require('../models/folder'); 
 
-const { notes } = require('../db/seed/data');
+const { notes, folders} = require('../db/seed/data');
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -27,6 +28,10 @@ describe('Notes RESTful API', function() {
   beforeEach(function() {
     return Note.insertMany(notes);
   });
+
+  beforeEach(function(){ 
+    return Folder.insertMany(folders); 
+  });   
 
   afterEach(function() {
     return mongoose.connection.db.dropDatabase();

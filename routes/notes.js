@@ -13,13 +13,13 @@ router.get('/', (req, res, next) => {
 
   if (searchTerm) {
     const re = new RegExp(searchTerm, 'i');
-    filter.$or = [{ 'title': re }, { 'content': re }, { 'folderId' : re}];
+    filter.$or = [{ 'title': re }, { 'content': re }];
   }
   
   Note.find(filter)
-    .sort({ updatedAt: 'desc' })
+    //.sort({ updatedAt: 'desc' })
     .then(results => {
-      res.json({ results });
+      res.json(results);
     })
     .catch(err => {
       return next(err); 
