@@ -105,7 +105,8 @@ describe('Notes RESTful API', function() {
               'content',
               'createdAt',
               'updatedAt', 
-              'folderId'
+              'folderId', 
+              'tags'
             );
             // 2) t
             // 2) then call the database
@@ -160,7 +161,8 @@ describe('Notes RESTful API', function() {
             'content',
             'createdAt',
             'updatedAt', 
-            'folderId'
+            'folderId', 
+            'tags'
           );
 
           // 3) then compare database results to API response

@@ -3,7 +3,7 @@
 const mongoose = require('mongoose'); 
 
 const tagSchema = mongoose.Schema({ 
-  name: { type: String, required: true }
+  name: { type: String, required: true, unique: true }
 }); 
 
 tagSchema.set('toJSON', { 
@@ -16,6 +16,4 @@ tagSchema.set('toJSON', {
 
 tagSchema.set('timestamps', true); 
 
-const tag = mongoose.model('Tag', tagSchema); 
-
-module.exports = tag; 
+module.exports =  mongoose.model('Tag', tagSchema);  

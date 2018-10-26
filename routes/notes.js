@@ -4,20 +4,31 @@ const express = require('express');
 
 const router = express.Router();
 const Note = require('../models/note');
+const Tag = require('../models/tag'); 
 const mongoose = require('mongoose'); 
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
-  const searchTerm = req.query.searchTerm;  
+  const { folderId, tagId, searchTerm} = req.query; 
+
   let filter = {};
 
   if (searchTerm) {
-    const re = new RegExp(searchTerm, 'i');
+    const re = new RegExp(searchTerm, 'ig');
     filter.$or = [{ 'title': re }, { 'content': re }];
   }
-  
+
+  if (folderId){ 
+    filter.folderId = folderId; 
+  }
+
+  if (tagId){ 
+    filter.tags = tagId; 
+  }
+
   Note.find(filter)
-    //.sort({ updatedAt: 'desc' })
+    .populate('tags')
+    .sort({ updatedAt: 'desc' })
     .then(results => {
       res.json(results);
     })
@@ -28,8 +39,10 @@ router.get('/', (req, res, next) => {
 
 /* ========== GET/READ A SINGLE ITEM ========== */
 router.get('/:id', (req, res, next) => {
-  const id = req.params.id;
+  const {id} = req.params; 
+
   return Note.findById(id)
+    .populate('tags')
     .then(result => {
       res.json(result);
     })
@@ -40,17 +53,15 @@ router.get('/:id', (req, res, next) => {
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/', (req, res, next) => {
-  const newNote = {
-    title: req.body.title,
-    content: req.body.content, 
-    folderId: req.body.folderId
-  };
+  const {title, content, folderId, tags} = req.body; 
 
-  if (!mongoose.Types.ObjectId.isValid(newNote.folderId)) {
+  if (!mongoose.Types.ObjectId.isValid(folderId)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
     return next(err);
   }
+  const newNote = {title, content, folderId, tags}; 
+
   Note.create(newNote)
     .then(result => {
       res
@@ -79,6 +90,7 @@ router.put('/:id', (req, res, next) => {
   //   err.status = 400;
   //   return next(err);
   // }
+
   const newArg = {new :true}; 
   Note.findByIdAndUpdate(id, newNote, newArg) 
     .then(() => { 

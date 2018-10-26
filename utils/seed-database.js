@@ -9,6 +9,7 @@ const Tag = require('../models/tag');
 
 const { notes, folders, tags } = require('../db/seed/data');
 
+// eslint-disable-next-line no-console
 console.info('Connecting to:', MONGODB_URI);
 mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
   .then(() => mongoose.connection.db.dropDatabase())
@@ -17,8 +18,9 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser:true })
       Note.insertMany(notes),
       Tag.insertMany(tags),
       Folder.insertMany(folders),
-      Folder.createIndexes()
- 
+      Note.createIndexes(), 
+      Folder.createIndexes(), 
+      Tag.createIndexes()
     ]);
   })
   .then(() => mongoose.disconnect())
