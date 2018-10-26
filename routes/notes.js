@@ -70,16 +70,17 @@ router.put('/:id', (req, res, next) => {
     
   const newNote = { 
     title: req.body.title, 
-    content : req.body.content
+    content : req.body.content, 
+    folderId : req.body.folderId
   }; 
 
+  // if (!mongoose.Types.ObjectId.isValid(newNote.folderId)) {
+  //   const err = new Error('The `id` is not valid');
+  //   err.status = 400;
+  //   return next(err);
+  // }
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    const err = new Error('The `id` is not valid');
-    err.status = 400;
-    return next(err);
-  }
-  Note.findOneAndUpdate({_id : id}, {$set : newNote}) 
+  Note.findByIdAndUpdate(id, newNote, {new :true}) 
     .then(() => { 
       res.status(204).end(); 
     })

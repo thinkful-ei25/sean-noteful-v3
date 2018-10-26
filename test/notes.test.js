@@ -47,11 +47,17 @@ describe('Notes RESTful API', function() {
 
   describe('PUT /api/notes/:id', function() { 
     let data; 
-    const newItem = { name : 'cheese', content : 'cheese'}; 
+    const newItem = { 
+      name : 'cheese', 
+      content : 'cheese', 
+      folderId : '111111111111111111111101'
+    }; 
+
     it('should update and return a new item', function() { 
       return Note.findOne()
         .then(_data => { 
           data = _data; 
+          console.log(_data.id);
           return chai.request(app).put(`/api/notes/${data.id}`); 
         })
         .then((res) => { 
@@ -67,6 +73,7 @@ describe('Notes RESTful API', function() {
       return Note.findOne()
         .then(_data => { 
           data =_data; 
+          console.log(_data.id);
           return chai.request(app).del(`/api/notes/${data.id}`); 
         })
         .then((res) => { 
@@ -103,7 +110,6 @@ describe('Notes RESTful API', function() {
               'createdAt',
               'updatedAt', 
               'folderId'
-     
             );
             // 2) t
             // 2) then call the database
