@@ -66,7 +66,7 @@ router.put('/:id', (req, res, next) => {
     })
     .catch(err => {
       if (err.code === 11000) {
-        err = new Error('The folder name already exists');
+        err = new Error('The tag name already exists');
         err.status = 400;
       }
       res.status(400); 
@@ -88,7 +88,7 @@ router.post('/', (req, res, next) => {
 
   Tag.create(newTag)
     .then(result => {
-      Note.$pull({ tagId : newTag.id}); 
+  
       res
         .location(`/api/tags/${id}`)
         .status(201)
@@ -96,7 +96,7 @@ router.post('/', (req, res, next) => {
     })
     .catch(err => {
       if (err.code === 11000) {
-        err = new Error('The folder name already exists');
+        err = new Error('The tag name already exists');
         err.status = 400;
       }
       return next(err);
@@ -107,7 +107,8 @@ router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
 
   Tag.findByIdAndRemove(id)
-    .then(() => {
+    .then((result) => {
+      Note.update( {$pull : { tagId : result.id}} ); 
       res.status(204).end();
     })
     .catch(err => {

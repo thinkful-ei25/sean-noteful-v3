@@ -89,8 +89,6 @@ router.put('/:id', (req, res, next) => {
     }
   }); 
 
-  console.log(update);
-
   if (!update.title) {
     const err = new Error('Missing `title` in request body');
     err.status = 400;
